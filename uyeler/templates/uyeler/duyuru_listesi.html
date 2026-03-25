@@ -1,0 +1,24 @@
+{% extends "uyeler/base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="fw-bold mb-0">Duyurular</h2>
+    <div class="muted">Tüm kayıtlı duyurular</div>
+  </div>
+  <a href="/duyuru-ekle/" class="btn btn-danger">Yeni Duyuru</a>
+</div>
+
+<div class="row g-3">
+  {% for d in duyurular %}
+  <div class="col-md-6">
+    <div class="card p-3 rounded-4">
+      <div class="fw-bold">{{ d.baslik }}</div>
+      <div class="muted small mb-2">{{ d.tarih }}</div>
+      <div>{{ d.icerik }}</div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="muted">Henüz duyuru yok.</div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "uyeler/base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card p-4 rounded-4">
+      <h3 class="fw-bold mb-1">Giriş Yap</h3>
+      <div class="muted mb-3">Yönetim paneline erişim</div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Kullanıcı adı</label>
+          <input type="text" name="username" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Şifre</label>
+          <input type="password" name="password" class="form-control">
+        </div>
+        <button class="btn btn-danger w-100">Giriş Yap</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

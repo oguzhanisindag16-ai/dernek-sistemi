@@ -1,0 +1,38 @@
+{% extends "uyeler/base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="fw-bold mb-0">Üyeler</h2>
+    <div class="muted">Kartlı ve mobil uyumlu görünüm</div>
+  </div>
+  <a href="/uye-ekle/" class="btn btn-danger">Yeni Üye</a>
+</div>
+
+<form class="mb-4">
+  <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Ad veya telefon ile ara">
+</form>
+
+<div class="row g-3">
+  {% for uye in uyeler %}
+  <div class="col-md-4 col-lg-3">
+    <div class="card p-3 rounded-4 h-100">
+      {% if uye.foto %}
+        <img src="{{ uye.foto.url }}" class="img-fluid rounded-3 mb-3" style="height:220px;object-fit:cover;">
+      {% else %}
+        <div class="rounded-3 mb-3 d-flex align-items-center justify-content-center" style="height:220px;background:#18202b;">Fotoğraf yok</div>
+      {% endif %}
+      <div class="fw-bold">{{ uye.ad_soyad }}</div>
+      <div class="muted mb-2">{{ uye.telefon }}</div>
+      <div class="mb-3">
+        {% if uye.aidat_durumu == 'Odendi' %}<span class="badge badge-odendi">Ödendi</span>{% endif %}
+        {% if uye.aidat_durumu == 'Odenmedi' %}<span class="badge badge-odenmedi">Ödenmedi</span>{% endif %}
+        {% if uye.aidat_durumu == 'Kismi' %}<span class="badge badge-kismi">Kısmi</span>{% endif %}
+      </div>
+      <a href="/uye/{{ uye.id }}/duzenle/" class="btn btn-outline-light">Düzenle</a>
+    </div>
+  </div>
+  {% empty %}
+  <div class="muted">Kayıt bulunamadı.</div>
+  {% endfor %}
+</div>
+{% endblock %}

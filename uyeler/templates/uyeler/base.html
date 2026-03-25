@@ -25,22 +25,22 @@
   <div class="container-fluid">
     <div class="row">
       {% if request.user.is_authenticated %}
-        <div class="col-md-2 sidebar">
-          <h4 class="mb-4">DERNEK</h4>
-          <a href="/" class="menu-btn">🏠 Ana Panel</a>
-          <a href="/uyeler/" class="menu-btn">👥 Üyeler</a>
-          <a href="/uye-ekle/" class="menu-btn">➕ Üye Ekle</a>
-          <a href="/duyurular/" class="menu-btn">📢 Duyurular</a>
-          <a href="/admin/" class="menu-btn">⚙️ Admin</a>
-          <a href="/cikis/" class="menu-btn">🚪 Çıkış</a>
-        </div>
-        <div class="col-md-10 p-4">
-          {% block content %}{% endblock %}
-        </div>
+      <div class="col-md-2 sidebar">
+        <h4 class="mb-4">DERNEK</h4>
+        <a href="/" class="menu-btn">🏠 Ana Panel</a>
+        <a href="/uyeler/" class="menu-btn">👥 Üyeler</a>
+        <a href="/uye-ekle/" class="menu-btn">➕ Üye Ekle</a>
+        <a href="/duyurular/" class="menu-btn">📢 Duyurular</a>
+        <a href="/admin/" class="menu-btn">⚙️ Admin</a>
+        <a href="/cikis/" class="menu-btn">🚪 Çıkış</a>
+      </div>
+      <div class="col-md-10 p-4">
+        {% block content %}{% endblock %}
+      </div>
       {% else %}
-        <div class="col-12 p-4">
-          {% block content %}{% endblock content %}
-        </div>
+      <div class="col-12 p-4">
+        {% block guest_content %}{% endblock %}
+      </div>
       {% endif %}
     </div>
   </div>

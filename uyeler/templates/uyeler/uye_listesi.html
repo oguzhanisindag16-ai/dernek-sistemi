@@ -1,38 +1,75 @@
 {% extends "uyeler/base.html" %}
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
   <div>
-    <h2 class="fw-bold mb-0">Üyeler</h2>
-    <div class="muted">Kartlı ve mobil uyumlu görünüm</div>
+    <h2 class="fw-bold mb-1">Üyeler</h2>
+    <div style="color:#9fb2cc;">Fotoğraflı kart görünümü ve hızlı erişim</div>
   </div>
-  <a href="/uye-ekle/" class="btn btn-danger">Yeni Üye</a>
+  <a href="/uye-ekle/" class="btn btn-danger">+ Yeni Üye</a>
 </div>
 
 <form class="mb-4">
-  <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Ad veya telefon ile ara">
+  <div class="row g-2">
+    <div class="col-md-8">
+      <input type="text" name="q" value="{{ q }}" class="form-control" placeholder="Ad veya telefon ile ara">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-outline-light w-100">Ara</button>
+    </div>
+    <div class="col-md-2">
+      <a href="/uyeler/" class="btn btn-outline-secondary w-100">Temizle</a>
+    </div>
+  </div>
 </form>
 
-<div class="row g-3">
+<div class="row g-4">
   {% for uye in uyeler %}
-  <div class="col-md-4 col-lg-3">
-    <div class="card p-3 rounded-4 h-100">
+  <div class="col-md-6 col-xl-4">
+    <div class="card p-3 h-100 shadow-sm">
       {% if uye.foto %}
-        <img src="{{ uye.foto.url }}" class="img-fluid rounded-3 mb-3" style="height:220px;object-fit:cover;">
+        <img src="{{ uye.foto.url }}" class="img-fluid rounded-4 mb-3" style="height:260px; object-fit:cover;">
       {% else %}
-        <div class="rounded-3 mb-3 d-flex align-items-center justify-content-center" style="height:220px;background:#18202b;">Fotoğraf yok</div>
+        <div class="d-flex align-items-center justify-content-center rounded-4 mb-3" style="height:260px; background:#1c2533;">
+          Fotoğraf yok
+        </div>
       {% endif %}
-      <div class="fw-bold">{{ uye.ad_soyad }}</div>
-      <div class="muted mb-2">{{ uye.telefon }}</div>
-      <div class="mb-3">
-        {% if uye.aidat_durumu == 'Odendi' %}<span class="badge badge-odendi">Ödendi</span>{% endif %}
-        {% if uye.aidat_durumu == 'Odenmedi' %}<span class="badge badge-odenmedi">Ödenmedi</span>{% endif %}
-        {% if uye.aidat_durumu == 'Kismi' %}<span class="badge badge-kismi">Kısmi</span>{% endif %}
+
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <div class="fw-bold fs-5">{{ uye.ad_soyad }}</div>
+          <div style="color:#9fb2cc;">{{ uye.telefon|default:"Telefon yok" }}</div>
+        </div>
+        <div>
+          {% if uye.aidat_durumu == 'Odendi' %}
+            <span class="badge bg-success">Ödendi</span>
+          {% elif uye.aidat_durumu == 'Odenmedi' %}
+            <span class="badge bg-danger">Ödenmedi</span>
+          {% else %}
+            <span class="badge bg-warning text-dark">Kısmi</span>
+          {% endif %}
+        </div>
       </div>
-      <a href="/uye/{{ uye.id }}/duzenle/" class="btn btn-outline-light">Düzenle</a>
+
+      <div class="mb-3" style="color:#9fb2cc; font-size:14px;">
+        <div><strong>Kayıt:</strong> {{ uye.kayit_tarihi|date:"d.m.Y H:i" }}</div>
+        {% if uye.adres %}
+        <div class="mt-1"><strong>Adres:</strong> {{ uye.adres|truncatechars:80 }}</div>
+        {% endif %}
+      </div>
+
+      <div class="mt-auto d-flex gap-2">
+        <a href="/uye/{{ uye.id }}/duzenle/" class="btn btn-outline-light w-100">Düzenle</a>
+      </div>
     </div>
   </div>
   {% empty %}
-  <div class="muted">Kayıt bulunamadı.</div>
+  <div class="col-12">
+    <div class="card p-4 rounded-4">
+      <div style="color:#9fb2cc;">Kayıt bulunamadı.</div>
+    </div>
+  </div>
   {% endfor %}
 </div>
+
 {% endblock %}
